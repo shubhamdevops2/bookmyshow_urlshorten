@@ -15,7 +15,7 @@ function App() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('handler-svc:3001/shorten', { url: originalURL });
+      const response = await axios.post('http://handler-svc:3001/shorten', { url: originalURL });
       setShortenedURL(response.data.shortenedURL);
     } catch (error) {
       console.error('Error submitting URL:', error);
@@ -28,7 +28,7 @@ function App() {
     const hash = reverseShortURL.split('/').pop();
     console.log("hash value is ->",hash)
     try {
-      const response = await axios.get(`handler-svc:3001/reverse/${hash}`);
+      const response = await axios.get(`http://handler-svc:3001/reverse/${hash}`);
       setReverseOriginalURL(response.data.originalURL);
       setReverseErrorMessage('');
     } catch (error) {
