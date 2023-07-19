@@ -12,7 +12,7 @@ function App() {
   const [reverseErrorMessage, setReverseErrorMessage] = useState('');
 
   const handleURLSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
 
     // try {
     //   const response = await axios.post('http://10.111.59.76:3001/shorten', { url: originalURL });
