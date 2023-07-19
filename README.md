@@ -50,3 +50,58 @@ services:
     networks:
       - net
 
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: "handler-service-nodeport"
+spec:
+  selector:
+    app: handler-deploy
+  ports:
+  - name: mongodb
+    port: 27017
+    targetPort: 27017
+    nodePort: 32258
+  - name: handler
+    port: 3001
+    targetPort: 3001
+    nodePort: 32251
+  type: NodePort
+
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: "handler-service-nodeport"
+spec:
+  selector:
+    app: handler-deploy
+  ports:
+  - name: handler
+    port: 3001
+    targetPort: 3001
+    nodePort: 32255
+  - name: mongo
+    port: 27017
+    targetPort: 27017
+  type: NodePort
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: "handler-svc"
+spec:
+  selector:
+    app: handler-deploy
+  ports:
+  - name: handler
+    port: 3001
+    targetPort: 3001
+  - name: mongo
+    port: 27017
+    targetPort: 27017
