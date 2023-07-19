@@ -15,7 +15,7 @@ function App() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('handler-svc:3001/shorten', { url: originalURL });
+      const response = await axios.post('handler-svc:3001/api/shorten', { url: originalURL });
       setShortenedURL(response.data.shortenedURL);
     } catch (error) {
       console.error('Error submitting URL:', error);
