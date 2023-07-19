@@ -12,14 +12,42 @@ function App() {
   const [reverseErrorMessage, setReverseErrorMessage] = useState('');
 
   const handleURLSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
-    try {
-      const response = await axios.post('http://10.111.59.76:3001/shorten', { url: originalURL });
-      setShortenedURL(response.data.shortenedURL);
-    } catch (error) {
-      console.error('Error submitting URL:', error);
-    }
+    // try {
+    //   const response = await axios.post('http://10.111.59.76:3001/shorten', { url: originalURL });
+    //   setShortenedURL(response.data.shortenedURL);
+    // } catch (error) {
+    //   console.error('Error submitting URL:', error);
+    // }
+
+    const url = 'http://10.111.59.76:3001/shorten'; // Replace with your API endpoint URL
+
+    const data = {
+      url: originalURL
+    }; // Replace with the data you want to send in the POST request
+  
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          console.log('API Response:', response);
+          // Do something with the response data
+        } else {
+          console.error('Error:', xhr.status, xhr.statusText);
+        }
+      }
+    };
+  
+    xhr.onerror = function () {
+      console.error('Network Error');
+    };
+  
+    xhr.send(JSON.stringify(data));
   };
 
   const handleReverseURLSubmit = async (e) => {
