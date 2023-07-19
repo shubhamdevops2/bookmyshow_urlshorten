@@ -1,77 +1,3 @@
-// import React, { useState } from 'react';
-// import axios from 'axios';
-// import './App.css';
-
-// function App() {
-//   const [originalURL, setOriginalURL] = useState('');
-//   const [shortenedURL, setShortenedURL] = useState('');
-//   const [reverseShortURL, setReverseShortURL] = useState('');
-//   const [reverseOriginalURL, setReverseOriginalURL] = useState('');
-//   const [reverseErrorMessage, setReverseErrorMessage] = useState('');
-
-//   const handleURLSubmit = async (e) => {
-//     e.preventDefault();
-
-//     try {
-//       const response = await axios.post('http://localhost:3001/shorten', { url: originalURL });
-//       setShortenedURL(response.data.shortenedURL);
-//     } catch (error) {
-//       console.error('Error submitting URL:', error);
-//     }
-//   };
-
-//   const handleReverseURLSubmit = async (e) => {
-//     e.preventDefault();
-
-//     try {
-//       const response = await axios.get(`/${reverseShortURL}`);
-//       setReverseOriginalURL(response.data.originalURL);
-//       setReverseErrorMessage('');
-//     } catch (error) {
-//       console.error('Error retrieving original URL:', error);
-//       setReverseOriginalURL('');
-//       setReverseErrorMessage('Invalid URL');
-//     }
-//   };
-
-//   const handleRedirect = async () => {
-//     try {
-//       const response = await axios.get(`/${shortenedURL}`);
-//       setOriginalURL(response.data.originalURL);
-//       console.log("originalURL -> ",originalURL);
-//     } catch (error) {
-//       console.error('Error redirecting:', error);
-//     }
-//   };
-
-//   return (
-//     <div className="container">
-//       <h1 className="title">URL Shortener</h1>
-//       <form onSubmit={handleURLSubmit}>
-//         <input
-//           type="text"
-//           placeholder="Enter the URL"
-//           value={originalURL}
-//           onChange={(e) => setOriginalURL(e.target.value)}
-//           className="url-input"
-//         />
-//         <button type="submit" className="submit-button">Shorten URL</button>
-//       </form>
-//       {shortenedURL && (
-//         <div className="shortened-url-container">
-//           <h3 className="shortened-url-title">Shortened URL:</h3>
-//           <a href={originalURL} onClick={handleRedirect} className="shortened-url-link" target="_blank" rel="noopener noreferrer">
-//             http://localhost:3000/{shortenedURL}
-//           </a>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
 
 
 import React, { useState } from 'react';
@@ -89,7 +15,7 @@ function App() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3001/shorten', { url: originalURL });
+      const response = await axios.post('urlshorten-svc:3001/shorten', { url: originalURL });
       setShortenedURL(response.data.shortenedURL);
     } catch (error) {
       console.error('Error submitting URL:', error);
@@ -102,7 +28,7 @@ function App() {
     const hash = reverseShortURL.split('/').pop();
     console.log("hash value is ->",hash)
     try {
-      const response = await axios.get(`http://localhost:3001/reverse/${hash}`);
+      const response = await axios.get(`urlshorten-svc:3001/reverse/${hash}`);
       setReverseOriginalURL(response.data.originalURL);
       setReverseErrorMessage('');
     } catch (error) {
