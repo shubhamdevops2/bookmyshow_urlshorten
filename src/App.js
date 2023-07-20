@@ -44,6 +44,8 @@ function App() {
     // Other parts of the URL might remain static, such as the domain or base URL, as they are not altered or changed during the process of shortening or redirecting the URL.
     // Example - Short -> http://localhost:3000/dsfnaufn
     //           Original -> https://en.wikipedia.org/wiki/Artificial_intelligence
+    //
+    // hence we will use the hash keys only like -> dsfnaufn
     const hash = reverseShortURL.split('/').pop();
     
     
