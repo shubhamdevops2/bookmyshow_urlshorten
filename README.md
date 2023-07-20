@@ -4,7 +4,7 @@ This application serves as a frontend that communicates exclusively with the han
 
 Example -
 
-**Input URL ->** https://en.wikipedia.org/wiki/Artificial_intelligence
+**Input URL ->** https://en.wikipedia.org/wiki/Artificial_intelligence , 
 **Output URL ->** http://localhost:3000/70ovli4d
 
 
@@ -15,7 +15,7 @@ Example -
 - This application is based on the react.js app so it uses 3000 port to access to UI. 
 - The UI is primarily composed of two main pages, namely App.js and App.css. For the clarity, we'll focus solely on App.js as it contains the frontend logic, while disregarding other files for now. The App.css is solely responsible for styling the UI.
 
-##
+
 
 
 ### App.js
