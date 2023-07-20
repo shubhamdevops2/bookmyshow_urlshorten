@@ -55,7 +55,7 @@ function App() {
       // In the API POST request, we are sending the request to the handler server along with the shorten hash key path
       // since the handler server works on port 3001, the API POST request is directed to the same port by passing the hash key in parameters
       // We can also use the handler kuberentes service like handler-svc:3001 for the same result
-      const response = await axios.get(`hhttp://10.104.85.125:3001/reverse/${hash}`);
+      const response = await axios.get(`http://10.104.85.125:3001/reverse/${hash}`);
       
       // Storing the result to Original URL variable
       setReverseOriginalURL(response.data.originalURL);
