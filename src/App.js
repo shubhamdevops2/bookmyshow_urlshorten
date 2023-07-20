@@ -15,7 +15,8 @@ function App() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://192.168.0.179:30554/shorten', { url: originalURL });
+      //const response = await axios.post('http://192.168.0.179:30554/shorten', { url: originalURL });
+      const response = await axios.post('http://10.104.85.125:3001/shorten', { url: originalURL });
       setShortenedURL(response.data.shortenedURL);
     } catch (error) {
       console.error('Error submitting URL:', error);
@@ -28,7 +29,8 @@ function App() {
     const hash = reverseShortURL.split('/').pop();
     console.log("hash value is ->",hash)
     try {
-      const response = await axios.get(`http://192.168.0.179:30554/reverse/${hash}`);
+      //const response = await axios.get(`http://192.168.0.179:30554/reverse/${hash}`);
+      const response = await axios.get(`hhttp://10.104.85.125:3001/reverse/${hash}`);
       setReverseOriginalURL(response.data.originalURL);
       setReverseErrorMessage('');
     } catch (error) {
