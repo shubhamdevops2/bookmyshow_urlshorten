@@ -1,36 +1,61 @@
 
-
+// Installing the  required libraries 
 import React, { useState } from 'react';
 import axios from 'axios';
+
+// Importing the CSS file
 import './App.css';
 
+// Createing the App function to use as a UI and actions performed on the UI
 function App() {
+
+  // Creating the required variables
   const [originalURL, setOriginalURL] = useState('');
   const [shortenedURL, setShortenedURL] = useState('');
   const [reverseShortURL, setReverseShortURL] = useState('');
   const [reverseOriginalURL, setReverseOriginalURL] = useState('');
   const [reverseErrorMessage, setReverseErrorMessage] = useState('');
 
+  // This function will be triggered when the user clicks on the Submit button to generate the short URL.
   const handleURLSubmit = async (e) => {
+    // To prevent from the auto reload in UI when this function will trigger
     e.preventDefault();
 
+    // try catch block to handle the errors after sending api request
     try {
-      //const response = await axios.post('http://192.168.0.179:30554/shorten', { url: originalURL });
+      
+      // In the API POST request, we are sending the request to the handler server along with the original URL
+      // since the handler server works on port 3001, the API POST request is directed to the same port by passing the original URL in the request body.
+      // We can also use the handler kuberentes service like handler-svc:3001 for the same result
       const response = await axios.post('http://10.104.85.125:3001/shorten', { url: originalURL });
+      
+      // Storing the result to ShortenURL variable
       setShortenedURL(response.data.shortenedURL);
     } catch (error) {
       console.error('Error submitting URL:', error);
     }
   };
 
+  // This function will trigger once the user clicked on Submit button for getting the original URL from database
   const handleReverseURLSubmit = async (e) => {
+    // To prevent from the auto reload in UI when this function will trigger
     e.preventDefault();
-
+    // From the user input, you will obtain the short URL, but you only need the hash key (the unique identifier) to retrieve the original URL from the database. 
+    // Other parts of the URL might remain static, such as the domain or base URL, as they are not altered or changed during the process of shortening or redirecting the URL.
+    // Example - Short -> http://localhost:3000/dsfnaufn
+    //           Original -> https://en.wikipedia.org/wiki/Artificial_intelligence
     const hash = reverseShortURL.split('/').pop();
-    console.log("hash value is ->",hash)
+    
+    
+    // try catch block to handle the errors after sending api request
     try {
-      //const response = await axios.get(`http://192.168.0.179:30554/reverse/${hash}`);
+
+      // In the API POST request, we are sending the request to the handler server along with the shorten hash key path
+      // since the handler server works on port 3001, the API POST request is directed to the same port by passing the hash key in parameters
+      // We can also use the handler kuberentes service like handler-svc:3001 for the same result
       const response = await axios.get(`hhttp://10.104.85.125:3001/reverse/${hash}`);
+      
+      // Storing the result to Original URL variable
       setReverseOriginalURL(response.data.originalURL);
       setReverseErrorMessage('');
     } catch (error) {

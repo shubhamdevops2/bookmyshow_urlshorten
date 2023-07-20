@@ -1,107 +1,32 @@
-mongodb+srv://shubham:U2h1YmhhbUAxMjMK@bookmyshow.vr5ga60.mongodb.net/?retryWrites=true&w=majority
-docker run --rm --name mongo -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=VRuAd2Nvmp4ELHh5 -e MONGO_INITDB_DATABASE=test -v /tmp/mongo-data:/data/db mongo:latest
+# Frontend Application
+
+This application serves as a frontend that communicates exclusively with the handler server. It facilitates the seamless sharing of data with the handler server, which, in turn, manages the storage and retrieval of data in the backend MongoDB database.
+
+Example -
+
+**Input URL ->** https://en.wikipedia.org/wiki/Artificial_intelligence
+**Output URL ->** http://localhost:3000/70ovli4d
+
+
+##
+
+# Architecture
+
+- This application is based on the react.js app so it uses 3000 port to access to UI. 
+- The UI is primarily composed of two main pages, namely App.js and App.css. For the clarity, we'll focus solely on App.js as it contains the frontend logic, while disregarding other files for now. The App.css is solely responsible for styling the UI.
+
+##
+
+
+### App.js
+
+- This file, App.js, plays a pivotal role in both the User Interface (UI) presentation and handling API requests to the handler server. It effectively interacts with the UI buttons to trigger specific actions, subsequently sending the relevant API requests to the handler server.
+- Please review the App.js file for detailed comments and explanations to understand the code better
+
+### Dockerimage
+
+- Please refer to the Dockerfile for comments and explanations to gain a deeper understanding.
 
 
 
-      - backend:
-          service:
-            name: game-service
-            port:
-              number: 8082
-        path: /score/?(.*)
 
-
-
-version: '3'
-networks:
-  net:
-services:
-  jenkins:
-    container_name: jenkins
-    image: jenkins/jenkins:latest
-    volumes:
-      - $PWD/jenkins_home/:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - 8080:8080
-    networks:
-      - net
-
-  sonarqube:
-    container_name: sonarqube
-    image: sonarqube:latest
-    volumes:
-      - $PWD/sonarqube/data:/opt/sonarqube/data
-      - $PWD/sonarqube/logs:/opt/sonarqube/logs
-      - $PWD/sonarqube/ext:/opt/sonarqube/extensions
-    ports:
-      - 9000:9000
-    networks:
-      - net
-
-  httpd:
-    container_name: httpd
-    image: test:3
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - net
-
-
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: "handler-service-nodeport"
-spec:
-  selector:
-    app: handler-deploy
-  ports:
-  - name: mongodb
-    port: 27017
-    targetPort: 27017
-    nodePort: 32258
-  - name: handler
-    port: 3001
-    targetPort: 3001
-    nodePort: 32251
-  type: NodePort
-
-
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: "handler-service-nodeport"
-spec:
-  selector:
-    app: handler-deploy
-  ports:
-  - name: handler
-    port: 3001
-    targetPort: 3001
-    nodePort: 32255
-  - name: mongo
-    port: 27017
-    targetPort: 27017
-  type: NodePort
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: "handler-svc"
-spec:
-  selector:
-    app: handler-deploy
-  ports:
-  - name: handler
-    port: 3001
-    targetPort: 3001
-  - name: mongo
-    port: 27017
-    targetPort: 27017
